@@ -24,7 +24,7 @@ jobs:
               echo "Building $d"
               cd $d
               npm install
-              slidev build --base /${{ github.event.repository.name }}/{}"
+              slidev build --base /${{ github.event.repository.name }}/{}
               cd ..
             fi
           done

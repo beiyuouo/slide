@@ -33,6 +33,16 @@ jobs:
             fi
           done
 
+      - name: Generate index.html
+        run: |
+          echo "<html><head><title>Slides</title></head><body><h1>Slides Index</h1><ul>" > build/index.html
+          for d in $(tree -d -L 1 | grep -v "build" | grep -v "directories"); do
+            if [ -d "$d/dist" ]; then
+              echo "<li><a href=\"/$d\">$d</a></li>" >> build/index.html
+            fi
+          done
+          echo "</ul></body></html>" >> build/index.html
+
       - name: Deploy pages
         uses: crazy-max/ghaction-github-pages@v2
         with:

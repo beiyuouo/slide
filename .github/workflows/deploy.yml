@@ -16,10 +16,16 @@ jobs:
         run: ls -d */ | xargs -I {} sh -c "cd {} && npm install && npm run build"
 
       - name: Create build folder
-        run: mkdir -p build
+        run: |
+          mkdir -p build
+          tree -d -L 1 | grep -v "build" | grep -v "node_modules" | grep -v "dist" | xargs -I {} sh -c "mkdir -p build/{}"
+          tree -d -L 2
 
       - name: Copy build files to root # */dist -> build/*
-        run: ls -d */ | xargs -I {} sh -c "mkdir -p ./build/{} && cp -r {}/dist/. ./build/{}"
+        run: |
+          for d in $(tree -d -L 1 | grep -v "build" | grep -v "node_modules" | grep -v "dist"); do
+              cp -r $d/dist/* build/$d
+          done
 
       - name: Deploy pages
         uses: crazy-max/ghaction-github-pages@v2

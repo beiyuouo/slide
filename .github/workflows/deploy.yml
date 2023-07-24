@@ -13,10 +13,21 @@ jobs:
           node-version: "14"
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm install
+          npm install -g @slidev/cli
 
       - name: Build for All subfolders
-        run: ls -d */ | xargs -I {} sh -c "cd {} && npm install && npm i -g @slidev/cli && slidev build --base /${{ github.event.repository.name }}/{}"
+        run: |
+          for d in $(tree -d -L 1 | grep -v "build" | grep -v "directories"); do
+            if [ -f "$d/package.json" ]; then
+              echo "Building $d"
+              cd $d
+              npm install
+              slidev build --base /${{ github.event.repository.name }}/{}"
+              cd ..
+            fi
+          done
 
       - name: Create build folder
         run: |

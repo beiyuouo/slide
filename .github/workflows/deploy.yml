@@ -35,10 +35,10 @@ jobs:
 
       - name: Generate index.html
         run: |
-          echo "<html><head><title>Slides</title></head><body><h1>Slides Index</h1><ul>" > build/index.html
+          echo "<html><head><link href="/assets/css/style.css" rel="stylesheet" type="text/css" /><title>Slides</title></head><body><h1>Slides Index</h1><ul>" > build/index.html
           for d in $(tree -d -L 1 | grep -v "build" | grep -v "directories"); do
             if [ -d "$d/dist" ]; then
-              echo "<li><a href=\"/$d\">$d</a></li>" >> build/index.html
+              echo "<li><a href=\"${{ github.event.repository.name }}/$d\">$d</a></li>" >> build/index.html
             fi
           done
           echo "</ul></body></html>" >> build/index.html

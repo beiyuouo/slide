@@ -19,7 +19,7 @@ jobs:
         run: mkdir -p build
 
       - name: Copy build files to root # */dist -> build/*
-        run: ls -d */ | xargs -I {} sh -c "mkdir -p ./build/{} && cp -r {}/dist/* ./build/{}"
+        run: ls -d */ | xargs -I {} sh -c "mkdir -p ./build/{} && cp -r {}/dist/. ./build/{}"
 
       - name: Deploy pages
         uses: crazy-max/ghaction-github-pages@v2

@@ -18,13 +18,16 @@ jobs:
       - name: Create build folder
         run: |
           mkdir -p build
-          tree -d -L 1 | grep -v "build" | grep -v "node_modules" | grep -v "dist" | xargs -I {} sh -c "mkdir -p build/{}"
           tree -d -L 2
 
       - name: Copy build files to root # */dist -> build/*
         run: |
-          for d in $(tree -d -L 1 | grep -v "build" | grep -v "node_modules" | grep -v "dist"); do
+          for d in $(tree -d -L 1 | grep -v "build" | grep -v "directories"); do
+            if [ -d "$d/dist" ]; then
+              echo "Copying $d"
+              mkdir -p build/$d
               cp -r $d/dist/* build/$d
+            fi
           done
 
       - name: Deploy pages

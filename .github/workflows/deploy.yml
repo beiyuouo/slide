@@ -16,6 +16,7 @@ jobs:
         run: |
           npm install
           npm install -g @slidev/cli
+          npm install -g playwright-chromium
 
       - name: Build for All subfolders
         run: |

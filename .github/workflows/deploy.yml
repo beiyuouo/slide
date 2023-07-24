@@ -1,8 +1,24 @@
 name: Deploy pages
-on: push
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches:
+      - main
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -13,7 +29,7 @@ jobs:
         run: npm install
 
       - name: Build for All subfolders
-        run: ls -d */ | xargs -I {} sh -c "cd {} && npm install && npm run build --base ${{ github.event.repository.name }}"
+        run: ls -d */ | xargs -I {} sh -c "cd {} && npm install && npm i -g @slidev/cli && slidev build --base ${{ github.event.repository.name }}"
 
       - name: Create build folder
         run: |

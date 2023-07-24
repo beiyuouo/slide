@@ -25,7 +25,7 @@ jobs:
               cd $d
               npm install
               npm i -D playwright-chromium
-              slidev build --base /${{ github.event.repository.name }}/{}
+              slidev build --base /${{ github.event.repository.name }}/${d}
               cd ..
             fi
           done

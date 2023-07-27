@@ -44,7 +44,7 @@ ICT, CAS
 1. Optimization Problem & Deep Learning
 2. Basic Definition (Convexity, Lipschitz Continuity, Smoothness, etc.)
 3. Gradient Decent & Mini-batch Stochastic Gradient Decent
-4. (Optional) Convergence Analysis
+4. Convergence Analysis
 5. (Optional) Convergence Analysis for Distributed Machine Learning
 6. (Optional) Convergence Analysis for Federated Learning 
 
@@ -814,28 +814,24 @@ layout: center
 class: text-center
 ---
 
-## Convergence Analysis for Distributed Machine Learning
-
-同步的分布式随机梯度下降（Synchronous Distributed Stochastic Gradient Descent，SD-SGD）和异步的分布式随机梯度下降（Asynchronous Distributed Stochastic Gradient Descent，AS-SGD）。
+## Other Convergence Analysis
 
 ---
 
-## Synchronous Distributed Stochastic Gradient Descent
+## Other Convergence Analysis
 
----
+| Condition | GD | mini-batch SGD |
+| --- | --- | --- |
+| Convex | $O(\frac{1}{\sqrt{T}})$ | $O(\frac{1}{\sqrt{T}})$ |
+| + Lipschitz | $O(\frac{1}{T})$ | $O(\frac{1}{\sqrt{T}})$ |
+| + Strongly Convex | $O(c^{T})$ | $O(\frac{1}{T})$ |
 
-## Asynchronous Distributed Stochastic Gradient Descent
 
----
-layout: center
-class: text-center
----
+### Distributed Optimization
 
-## Convergence Analysis for Federated Learning
-
----
-
-## Federated Averaging (FedAvg)
+- Distributed Synchrounous SGD
+- Distributed Asynchrounous SGD
+- Federated Learning
 
 ---
 
@@ -844,6 +840,7 @@ class: text-center
 1. 《Convex Optimization》
 2. 《Optimization Algorithm for Distributed Machine Learning》
 3. 《Dive into Deep Learning》
+4. 《Optimization Methods for Large-Scale Machine Learning》
 
 <br>
 

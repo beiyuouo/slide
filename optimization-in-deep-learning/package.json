@@ -10,5 +10,8 @@
     "@slidev/theme-apple-basic": "^0.20.0",
     "@slidev/theme-default": "latest",
     "@slidev/theme-seriph": "latest"
+  },
+  "devDependencies": {
+    "@iconify-json/twemoji": "^1.1.11"
   }
 }

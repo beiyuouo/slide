@@ -820,12 +820,13 @@ class: text-center
 
 ## Other Convergence Analysis
 
-| Condition | GD | mini-batch SGD |
+| Condition | GD | SGD |
 | --- | --- | --- |
 | Convex | $O(\frac{1}{\sqrt{T}})$ | $O(\frac{1}{\sqrt{T}})$ |
 | + Lipschitz | $O(\frac{1}{T})$ | $O(\frac{1}{\sqrt{T}})$ |
 | + Strongly Convex | $O(c^{T})$ | $O(\frac{1}{T})$ |
 
+> 10-725/36-725: Convex Optimization(Fall 2018), Lecture 24: November 26, Ryan Tibshirani
 
 ### Distributed Optimization
 
@@ -837,10 +838,10 @@ class: text-center
 
 ## Reference
 
-1. 《Convex Optimization》
-2. 《Optimization Algorithm for Distributed Machine Learning》
-3. 《Dive into Deep Learning》
-4. 《Optimization Methods for Large-Scale Machine Learning》
+1. 《Convex Optimization》, Stephen Boyd
+2. 《Optimization Algorithm for Distributed Machine Learning》, Gauri Joshi
+3. 《Dive into Deep Learning》, D2L.ai
+4. 《Optimization Methods for Large-Scale Machine Learning》, Léon Bottou
 
 <br>
 

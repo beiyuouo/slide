@@ -10,7 +10,19 @@ class: 'text-center'
 highlighter: shiki
 # show line numbers in code blocks
 lineNumbers: false
+# enabled pdf downloading in SPA build, can also be a custom url
 download: true
+# filename of the export file
+exportFilename: 'optimization-in-deep-learning'
+# export options
+# use export CLI options in camelCase format
+# Learn more: https://sli.dev/guide/exporting.html
+export:
+  format: pdf
+  timeout: 30000
+  dark: true
+  withClicks: false
+  withToc: false
 
 # some information about the slides, markdown enabled
 info: |

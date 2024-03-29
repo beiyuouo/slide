@@ -14,7 +14,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          apt install -y fontconfig mkfontscale
+          sudo apt-get -y install fontconfig mkfontscale
           fc-list :lang=zh
           cp msyh.ttf /usr/share/fonts/
           mkfontscale

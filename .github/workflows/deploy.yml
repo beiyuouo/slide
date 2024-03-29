@@ -21,6 +21,8 @@ jobs:
           mkfontscale
           mkfontdir
           fc-cache
+          cd ${{ github.workspace }}
+          ls -l
           npm install
           npm install -g @slidev/cli
 

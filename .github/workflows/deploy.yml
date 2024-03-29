@@ -26,6 +26,8 @@ jobs:
 
       - name: Build for All subfolders
         run: |
+          cd ${{ github.workspace }}
+          ls -l
           for d in $(tree -d -L 1 | grep -v "build" | grep -v "directories"); do
             if [ -f "$d/package.json" ]; then
               echo "Building $d"

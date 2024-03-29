@@ -14,6 +14,12 @@ jobs:
 
       - name: Install dependencies
         run: |
+          apt install -y fontconfig mkfontscale
+          fc-list :lang=zh
+          cp msyh.ttf /usr/share/fonts/
+          mkfontscale
+          mkfontdir
+          fc-cache
           npm install
           npm install -g @slidev/cli
 

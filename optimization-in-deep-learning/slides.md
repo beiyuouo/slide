@@ -1,34 +1,21 @@
 ---
-# try also 'default' to start simple
 theme: seriph
-# random image from a curated Unsplash collection by Anthony
-# like them? see https://unsplash.com/collections/94734566/slidev
 background: black
-# apply any windi css classes to the current slide
-class: 'text-center'
-# https://sli.dev/custom/highlighters.html
+class: text-center
 highlighter: shiki
-# show line numbers in code blocks
 lineNumbers: false
-# enabled pdf downloading in SPA build, can also be a custom url
 download: true
-# filename of the export file
-exportFilename: 'optimization-in-deep-learning'
-# export options
-# use export CLI options in camelCase format
-# Learn more: https://sli.dev/guide/exporting.html
+exportFilename: optimization-in-deep-learning
 export:
   format: pdf
   timeout: 30000
   dark: true
   withClicks: false
   withToc: false
-
-# some information about the slides, markdown enabled
-info: |
-# persist drawings in exports and build
+info: ''
 drawings:
   persist: false
+title: Optimization in Deep Learning
 ---
 
 # Optimization in Deep Learning
@@ -49,6 +36,11 @@ ICT, CAS
 [Powered by @slidev](https://sli.dev/)
 
 </div>
+
+<!--
+大家好，我是闫冰洁，这次我的知识点分享主要是李沐老师《动手学深度学习》第 11 章优化部分的 11.1-11.5 节，这个 slide 是通过 slidev所以大家也可以在自己的设备上输入地址打开这个 slide
+-->
+
 ---
 
 ## TOC
@@ -58,7 +50,11 @@ ICT, CAS
 3. Gradient Decent & Mini-batch Stochastic Gradient Decent
 4. Convergence Analysis
 5. (Optional) Convergence Analysis for Distributed Machine Learning
-6. (Optional) Convergence Analysis for Federated Learning 
+6. (Optional) Convergence Analysis for Federated Learning
+
+<!--
+11.1-11.5 主要有几个部分，我重新组织了一下，一个部分就是优化问题的定义，还有优化中一些常见的定义例如凸性、拉普利斯连续、光滑等等，后面就是梯度下降，随机梯度下降，小批量随机梯度下降，后面会有一下收敛性的分析
+-->
 
 ---
 
@@ -71,6 +67,12 @@ ICT, CAS
 
 3. 本次分享的内容也是我在学习优化和收敛性分析时的一些经验，可能会有一些错误，欢迎大家交流和指正！
 
+<!--
+这里我稍微修改了重组了一下李沐老师的大纲，我们组大多都是做深度学习的，所以对深度学习中不常用的优化内容会进行取舍，比如牛顿法的分析，这是一个利用二阶梯度进行优化的，但是深度学习中我们并不常用
+
+其次就是优化的收敛性分析在...
+-->
+
 ---
 layout: center
 class: text-center
@@ -79,6 +81,10 @@ class: text-center
 ## Optimization Problem & Deep Learning
 
 优化问题、深度学习中的优化目标、深度学习中优化的挑战
+
+<!--
+OK，那我们第一部分就是优化与深度学习
+-->
 
 ---
 
@@ -98,20 +104,30 @@ $$
 
 其中 $f(x)$ 称为目标函数，$x$ 称为优化变量，$\text{s.t.}$ 表示满足的约束条件
 
+<!--
+这是一个优化问题的基本定义，首先是我们有目标函数 f(x)，其中 x 是我们要优化的变量， s.t. 是 subject to，表示约束条件，g_i, f_i 是优化变量需要满足的一些不等式和等式约束
+-->
+
 ---
 
 ## Optimization Problem & Deep Learning
 
 深度学习中优化函数：损失函数 -> 最小化的目标函数
 
-由于优化算法的目标函数通常是基于训练数据集的损失函数，因此优化的目标是减少**训练误差**，但其实我们希望的是减少**泛化误差**。因此在深度学习中，我们不仅需要考虑优化算法的收敛性，还需要考虑优化算法的泛化性，防止**过拟合**。
+由于优化算法的目标函数通常是基于训练数据集的损失函数，因此优化的目标是减少**训练误差**，但其实我们希望的是减少**泛化误差**，也就是在验证集或测试集上误差减小。
 
-然而训练数据集的最低经验风险可能与最低风险（泛化误差）不同 <twemoji-smiling-face-with-tear />
+因此在深度学习中，我们不仅需要考虑优化算法的收敛性，还需要考虑优化算法的泛化性，防止**过拟合**。
+
+然而训练数据集的最小经验风险可能与最小风险（泛化误差）不同 <twemoji-smiling-face-with-tear />
 
 <!-- center -->
 <div class="flex flex-wrap justify-center gap-4">
-  <img src="https://zh.d2l.ai/_images/output_optimization-intro_70d214_33_0.svg" class="h-60 rounded" />
+  <img src="/assets/output_optimization-intro_70d214_33_1.svg" class="h-60 rounded" />
 </div>
+
+<!--
+在深度学习中呢，我们要优化的其实就是损失函数，损失函数一般包含了很多我们想要最小化内容的组合
+-->
 
 ---
 
@@ -126,10 +142,11 @@ $$
 对于任何目标函数 $f(x)$，如果在 $x$ 处对应的值 $f(x)$ 小于在 $x$ 附近任意其他点的 $f(x)$ 值，那么 $f(x)$ 可能是局部最小值。如果在 $f(x)$ 处的 $x$ 值是整个域中目标函数的最小值，那么 $f(x)$ 是全局最小值。
 
 <div class="flex flex-wrap justify-center gap-4">
-  <img src="https://zh.d2l.ai/_images/output_optimization-intro_70d214_48_0.svg" class="h-60 rounded" />
+  <img src="/assets/output_optimization-intro_70d214_48_0.svg" class="h-60 rounded" />
 </div>
 
---- 
+
+---
 
 ## Challenges in Deep Learning Optimization
 
@@ -142,9 +159,10 @@ $$
 鞍点是指函数的所有梯度都消失但既不是全局最小值也不是局部最小值的任何位置。这时优化可能会停止，尽管它不是最小值。
 
 <div class="flex flex-wrap justify-center gap-4">
-  <img src="https://zh.d2l.ai/_images/output_optimization-intro_70d214_63_0.svg" class="h-60 rounded" />
-  <img src="https://zh.d2l.ai/_images/output_optimization-intro_70d214_78_0.svg" class="h-60 rounded" />
+  <img src="/assets/output_optimization-intro_70d214_63_0.svg" class="h-60 rounded" />
+  <img src="/assets/output_optimization-intro_70d214_78_0.svg" class="h-60 rounded" />
 </div>
+
 
 ---
 
@@ -161,8 +179,9 @@ $$
 使用 $f(x)=\tanh(x)$ 激活函数，恰好从 $x=4$ 处开始，然而 $f'(x)=1-\tanh^2(x)$，因此 $f'(4)=0.0013$，这意味着在 $x=4$ 处的梯度很小，可能优化将会停滞很长一段时间。
 
 <div class="flex flex-wrap justify-center gap-4">
-  <img src="https://zh.d2l.ai/_images/output_optimization-intro_70d214_93_0.svg" class="h-50 rounded" />
+  <img src="/assets/output_optimization-intro_70d214_93_0.svg" class="h-50 rounded" />
 </div>
+
 
 ---
 
@@ -170,15 +189,16 @@ $$
 
 <br/>
 
-可以看出 局部最小值 和 鞍点 挑战都是由于目标函数的非凸性导致的。
+可以看出 **局部最小值** 和 **鞍点** 挑战都是由于目标函数的非凸性导致的。
 
-而 梯度消失 可能会导致优化停滞，重参数化通常会有所帮助。对参数进行良好的初始化也可能是有益的。
+而 **梯度消失** 可能会导致优化停滞，重参数化通常会有所帮助。对参数进行良好的初始化也可能是有益的。
 
 但尽管深度学习是非凸的，但它们也经常在局部极小值附近表现出一些凸性。
 
 凸性在优化算法的设计中起到至关重要的作用， 因为在这种情况下对算法进行分析和测试要容易。
 
 很多深度学习的收敛性分析也是基于凸性的。
+
 
 ---
 layout: center
@@ -194,9 +214,6 @@ class: text-center
 
 ## Convex Set
 
-
-<br/>
-
 一个集合 $\mathcal{X}$ 是凸集，当且仅当对于任意 $x, y \in \mathcal{X}$ 和 $\alpha \in [0, 1]$，都有：
 
 $$
@@ -205,20 +222,20 @@ $$
 
 
 <div class="flex flex-wrap justify-center gap-4">
-  <img src="https://zh.d2l.ai/_images/pacman.svg" class="h-50 rounded" />
+  <img src="/assets/pacman.svg" class="h-50 rounded" />
 </div>
+
 
 ---
 
 ## Convex Set
 
-<br/>
-
 假设两个凸集 $\mathcal{X}$ 和 $\mathcal{Y}$，那么它们的交集 $\mathcal{X} \cap \mathcal{Y}$ 也是凸集。
 
 <div class="flex flex-wrap justify-center gap-4">
-  <img src="https://zh.d2l.ai/_images/convex-intersect.svg" class="h-50 rounded" />
+  <img src="/assets/convex-intersect.svg" class="h-50 rounded" />
 </div>
+
 
 ---
 
@@ -228,7 +245,7 @@ $$
 
 
 <div class="flex flex-wrap justify-center gap-4">
-  <img src="https://zh.d2l.ai/_images/nonconvex.svg" class="h-50 rounded" />
+  <img src="/assets/nonconvex.svg" class="h-50 rounded" />
 </div>
 
 
@@ -248,8 +265,12 @@ $$
 
 
 <div class="flex flex-wrap justify-center gap-4">
-  <img src="https://zh.d2l.ai/_images/output_convexity_94e148_18_0.svg" class="h-50 rounded" />
+  <img src="/assets/output_convexity_94e148_18_1.svg" class="h-50 rounded" />
 </div>
+
+<!--
+这三个函数，左右都是凸函数，中间的不是凸函数
+-->
 
 ---
 
@@ -279,6 +300,10 @@ $$
 
 这与 $x^{*}$ 是 $f$ 的局部极小值相矛盾。故 $x^{*}$ 是 $f$ 的全局极小值。
 
+<!--
+这里是凸函数的一些性质，第一点就是
+-->
+
 ---
 
 ## Properties of Convex Function
@@ -294,6 +319,10 @@ $$
 <br/>
 
 ...
+
+<!--
+凸函数还有一些其他性质，但我们主要还是用前面第一点的性质
+-->
 
 ---
 
@@ -319,6 +348,10 @@ $$
   <img src="/strong-convex.png" class="h-50 rounded" />
 </div>
 
+<!--
+强凸
+-->
+
 ---
 
 ## Strong Convex
@@ -334,6 +367,10 @@ $$
 
 
 同时，也不难验证，函数 $f$ 是 $\mu$-强凸的当且仅当 $f-\frac{\mu}{2}||\cdot||^2$ 是凸的。
+
+<!--
+After all；这里是一个推论
+-->
 
 ---
 
@@ -354,6 +391,10 @@ $$
   <img src="/lipschitz.png" class="h-50 rounded" />
 </div>
 
+<!--
+拉普利斯连续，让梯度有界
+-->
+
 ---
 
 ## Smoothness
@@ -372,6 +413,10 @@ $$
   <img src="/smoothness.png" class="h-50 rounded" />
 </div>
 
+<!--
+光滑，让曲率更光滑
+-->
+
 ---
 
 ## Smoothness
@@ -384,6 +429,10 @@ $$
 
 即，凸函数$f$是$L$-光滑的充分必要条件是其导数$\nabla f$是$L$-Lipschitz 连续的。
 
+<!--
+拉普利斯连续则是针对 f(x)
+-->
+
 ---
 layout: center
 class: text-center
@@ -392,6 +441,7 @@ class: text-center
 ## Gradient Decent & Mini-batch Stochastic Gradient Decent
 
 梯度下降、随机梯度下降、小批量随机梯度下降
+
 
 ---
 
@@ -416,8 +466,13 @@ $$
 $$
 
 <div class="flex flex-wrap justify-center gap-4">
-  <img src="https://zh.d2l.ai/_images/output_gd_79c039_33_0.svg" class="h-50 rounded" />
+  <img src="/assets/output_gd_79c039_33_1.svg" class="h-50 rounded" />
 </div>
+
+<!--
+学习率递减
+w^\ast 是最优解，有时会省略二阶小
+-->
 
 ---
 
@@ -443,6 +498,10 @@ $$
 f(x-\eta f^{\prime}(x))<f(x)
 $$
 
+<!--
+这里其实就是前面的等式；那么就是梯度下降一直让目标函数严格递减
+-->
+
 ---
 
 ## Gradient Decent (Learning Rate)
@@ -454,8 +513,12 @@ $$
 <br/><br/><br/>
 
 <div class="flex flex-wrap justify-center gap-4">
-  <img src="https://zh.d2l.ai/_images/output_gd_79c039_48_1.svg" class="h-60 rounded" />
+  <img src="/assets/output_gd_79c039_48_1.svg" class="h-60 rounded" />
 </div>
+
+<!--
+这是一个学习率较小的例子，需要迭代很多次
+-->
 
 ---
 
@@ -468,9 +531,12 @@ $$
 <br/><br/>
 
 <div class="flex flex-wrap justify-center gap-4">
-  <img src="https://zh.d2l.ai/_images/output_gd_79c039_63_1.svg" class="h-60 rounded" />
+  <img src="/assets/output_gd_79c039_63_1.svg" class="h-60 rounded" />
 </div>
 
+<!--
+这是一个较大学习率的情况，梯度下降甚至会发散
+-->
 
 ---
 
@@ -485,9 +551,12 @@ $$
 <br/><br/>
 
 <div class="flex flex-wrap justify-center gap-4">
-  <img src="https://zh.d2l.ai/_images/output_gd_79c039_78_1.svg" class="h-60 rounded" />
+  <img src="/assets/output_gd_79c039_78_1.svg" class="h-60 rounded" />
 </div>
 
+<!--
+这是一个炼丹的过程 hhh
+-->
 
 ---
 
@@ -504,8 +573,12 @@ $$
 随机梯度经常用 $g(w_t)=\nabla f(w_t; \xi_t)$ 来表示。
 
 <div class="flex flex-wrap justify-center gap-4">
-  <img src="https://zh.d2l.ai/_images/output_sgd_baca77_48_1.svg" class="h-60 rounded" />
+  <img src="/assets/output_sgd_baca77_48_1.svg" class="h-60 rounded" />
 </div>
+
+<!--
+由于是随机选取的一个样本，因此是随机梯度下降
+-->
 
 ---
 
@@ -519,8 +592,12 @@ w_{t+1}=w_{t}-\frac{\eta_{t}}{b} \sum_{i=1}^{b} \nabla f(w_{t}; \xi_{t,i})
 $$
 
 <div class="flex flex-wrap justify-center gap-4">
-  <img src="https://zh.d2l.ai/_images/output_minibatch-sgd_f4d60f_183_0.svg" class="h-60 rounded" />
+  <img src="/assets/output_minibatch-sgd_f4d60f_183_0.svg" class="h-60 rounded" />
 </div>
+
+<!--
+小批量随机梯度下降，同时对一个 batch 计算总体梯度，因此梯度会相对稳定，并且可以并行，也是我们训练时常用的方式
+-->
 
 ---
 
@@ -544,6 +621,10 @@ $$
 \mathrm {Var}(\nabla f(w; \xi)) \leq \sigma^2
 $$
 
+<!--
+期望g是利用完整样本梯度的无偏
+-->
+
 ---
 
 ## Mini-batch Stochastic Gradient Decent
@@ -561,6 +642,10 @@ $$
 $$
 \mathbb{E}_{\xi}[||g(w; \xi)||^2] \leq ||\nabla f(w)||^{2} + \frac{\sigma^2}{b}
 $$
+
+<!--
+可以得到一个不等式，方差等于平方的期望-期望的平方，可以得到随机梯度关于梯度的一个不等式
+-->
 
 ---
 
@@ -584,6 +669,10 @@ $$
   <img src="https://zh.d2l.ai/_images/output_gd_79c039_123_1.svg" class="h-50 rounded" />
 </div>
 
+<!--
+牛顿法，利用二阶梯度，也就是 Hessian 矩阵
+-->
+
 ---
 
 ### Newton's Method
@@ -591,6 +680,10 @@ $$
 然而 Hessian 矩阵的存储和计算、求逆都较为复杂，因此牛顿法在深度学习中并不常用。
 
 选读：[拟牛顿法](https://zh.wikipedia.org/zh-hans/%E6%93%AC%E7%89%9B%E9%A0%93%E6%B3%95)
+
+<!--
+梯度已经是现有梯度的平方级别了，显存消耗和计算复杂度都很高，同时需要求逆，这个又是一个复杂的运算，因此在深度学习中并不常用；但是还有一种拟牛顿法，并不这么复杂，是对二阶梯度的一种估计，有些深度学习方法中可能会用到，这个是选读内容，感兴趣的同学可以进一步了解
+-->
 
 ---
 layout: center
@@ -600,6 +693,10 @@ class: text-center
 ## Convergence Analysis
 
 收敛性定义、收敛性分析（凸函数 & GD、mini-batch SGD；非凸函数 & mini-batch SGD）
+
+<!--
+下面就是收敛性分析了
+-->
 
 ---
 
@@ -620,6 +717,10 @@ class: text-center
 而在非凸优化中，由于可能存在多个局部极小点，不容易找到全局最优，因此考虑算法能否收敛到梯度为 0 的临界点。
 
 3. 利用梯度的遍历距离作为度量：$\min_{t=1,\cdots,T} \mathbb{E} ||\nabla f(w_T)||^2 \leq \epsilon(T)$ 或者 $\frac{1}{T}\sum_{t=1}^{T}\mathbb{E}||\nabla f(w_{t})||^2$ 趋于 0
+
+<!--
+首先我们要知道什么是收敛
+-->
 
 ---
 
@@ -644,8 +745,11 @@ f\left(w_{t+1}\right)-f\left(w_{t}\right) &=f\left(w_{t}-\eta  \nabla f\left(w_{
 \end{aligned}
 $$
 
----
+<!--
+我们这里讲一个最强假设的收敛性（FL 较早的收敛性分析中也有很多利用了强凸和光滑假设）；首先我们先给出结论；也是第一种收敛性的定义；这里我们直接代入梯度下降公式，代入L-光滑的定义的公式，稍微整理下就可以得到下面的这个式子，可以观察到这里eta是开口向上的二次函数
+-->
 
+---
 
 这时候我们通过对两项都添加负号，然后利用二次函数的顶点来确定 $\eta$ 的取值，同时希望用上强凸函数导出的性质，即
 
@@ -676,6 +780,10 @@ f\left(w_{t+1}\right)-f^{*}+f^{*}-f\left(w_{t}\right) \leq -\eta \mu (f\left(w_{
 \Rightarrow f\left(w_{t+1}\right)-f^{*} \leq (1-\eta \mu) (f\left(w_{t}\right)-f^{*})
 $$
 
+<!--
+这里我们先利用PL（Polyak-Lojasiewicz）不等式推出的一个结论；直接代入即可，一个向下开口的二次函数，很容易看出在对称轴取得最小值，因为我们能改变的只有eta，然后进行一个小学二年级学的等比数列的配方就可以了
+-->
+
 ---
 
 后面就归纳一下：
@@ -704,6 +812,10 @@ $$
 
 因此在这些假设下的 GD 有线性的收敛速率。
 
+<!--
+这里求完以后可以将t+1替换成t
+-->
+
 ---
 
 ## Convergence Analysis ($\mu$-strongly convex and $L$-smooth & mini-batch SGD)
@@ -726,6 +838,10 @@ f(w_{t+1}) - f(w_{t})&\leq \nabla f(w_{t})^{\top}(w_{t+1} - w_{t}) + \frac{L}{2}
 \end{align}
 $$
 
+<!--
+我们这里还有一个小批量梯度下降的证明，差不多的思路，只不过中间会对两边求一下期望，得到相似的结论，由于时间原因这里就不展开了，感兴趣的同学了阅读后面的参考内容了解一下
+-->
+
 ---
 
 对左右求期望得：
@@ -747,6 +863,7 @@ $$
 & \leq -\eta\mu(\mathbb{E}[f(w_{t})]-f^{*}) + \frac{L\eta^{2} \sigma^{2}}{2b}  \\
 \end{align}
 $$
+
 
 ---
 
@@ -775,6 +892,7 @@ $$
 \mathbb{E}[f(w_{t+1})] - f^{*} - \frac{L\eta \sigma^{2}}{2\mu b} \leq (1-\eta\mu)(\mathbb{E}[f(w_{t})]-f^{*} - \frac{L\eta \sigma^{2}}{2\mu b})
 $$
 
+
 ---
 
 得到
@@ -786,6 +904,7 @@ $$
 证毕。
 
 可以看出随机梯度下降的收敛速率同梯度下降的收敛速率相同，都是线性的，但是需要更多的迭代次数。
+
 
 ---
 
@@ -805,6 +924,10 @@ $$
 \mathbb{E}[f(w_{t+1})] - f(w_{t}) \leq -\eta ||\nabla f(w_{t})||^{2} + \frac{L\eta^{2} \sigma^{2}}{2b}
 $$
 
+<!--
+这里是进一步放缩条件，放成非凸的条件进行小批量梯度下降的证明，非凸的时候前两种收敛条件都已经不适用了，我们只能证明累积的梯度是被bound住的来证明收敛性
+-->
+
 ---
 
 对两边都求和，在除以 $t$，得到
@@ -821,12 +944,17 @@ $$
 
 复杂度 $t=O(\frac{1}{\epsilon})$，这个收敛速率是次线性的。
 
+<!--
+这里就已经得不到次线性的收敛条件了
+-->
+
 ---
 layout: center
 class: text-center
 ---
 
 ## Other Convergence Analysis
+
 
 ---
 
@@ -845,6 +973,7 @@ class: text-center
 - Distributed Synchrounous SGD
 - Distributed Asynchrounous SGD
 - Federated Learning
+
 
 ---
 

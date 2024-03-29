@@ -12,6 +12,7 @@
     "@slidev/theme-seriph": "latest"
   },
   "devDependencies": {
-    "@iconify-json/twemoji": "^1.1.11"
+    "@iconify-json/twemoji": "^1.1.11",
+    "playwright-chromium": "^1.42.1"
   }
 }

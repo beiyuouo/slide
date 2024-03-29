@@ -9,7 +9,8 @@
     "@slidev/cli": "latest",
     "@slidev/theme-apple-basic": "^0.20.0",
     "@slidev/theme-default": "latest",
-    "@slidev/theme-seriph": "latest"
+    "@slidev/theme-seriph": "latest",
+    "twemoji": "^14.0.2"
   },
   "devDependencies": {
     "@iconify-json/twemoji": "^1.1.11",

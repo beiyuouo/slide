@@ -15,7 +15,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get -y install fontconfig mkfontscale
+          sudo apt-get -y install ttf-mscorefonts-installer fontconfig 
           fc-list :lang=zh
           cp msyh.ttf /usr/share/fonts/
           mkfontscale

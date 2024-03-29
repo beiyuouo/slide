@@ -21,9 +21,6 @@ jobs:
           mkfontscale
           mkfontdir
           fc-cache
-          sudo apt-add-repository ppa:eosrei/fonts
-          sudo apt-get update
-          sudo apt-get -y install fonts-twemoji-svginot
           cd ${{ github.workspace }}
           ls -l
           npm install -g @slidev/cli@0.35.4

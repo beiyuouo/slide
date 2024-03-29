@@ -23,7 +23,6 @@ jobs:
           fc-cache
           cd ${{ github.workspace }}
           ls -l
-          npm install
           npm install -g @slidev/cli
 
       - name: Build for All subfolders

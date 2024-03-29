@@ -23,6 +23,8 @@ Change the `slides.md` to see the changes. For more information, please visit [d
 ```bash
 npm i -D playwright-chromium
 slidev export
+slidev export --dark
+slidev export-notes
 ```
 
 Then you can find the exported PDF file in the `dist` folder.

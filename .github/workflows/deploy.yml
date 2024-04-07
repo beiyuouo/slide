@@ -28,7 +28,7 @@ jobs:
               npm install @slidev/cli @slidev/theme-default @slidev/theme-seriph
               npm i -D @iconify-json/twemoji
               npm i -D playwright-chromium
-              npx slidev build --base ${{ github.workspace }}/${d}
+              npx slidev build --base /${{ github.event.repository.name }}/${d}
               npx slidev export --output ${{ github.workspace }}/${d}/dist
               cd ..
             fi

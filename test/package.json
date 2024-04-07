@@ -1,14 +1,10 @@
 {
-  "private": true,
-  "scripts": {
-    "dev": "slidev",
-    "build": "slidev build",
-    "export": "slidev export"
-  },
   "dependencies": {
-    "@slidev/cli": "latest",
-    "@slidev/theme-apple-basic": "^0.20.0",
-    "@slidev/theme-default": "latest",
-    "@slidev/theme-seriph": "latest"
+    "@slidev/cli": "^0.48.8",
+    "@slidev/theme-default": "^0.25.0",
+    "@slidev/theme-seriph": "^0.25.0"
+  },
+  "devDependencies": {
+    "playwright-chromium": "^1.43.0"
   }
 }

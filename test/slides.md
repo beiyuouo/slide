@@ -21,6 +21,16 @@ drawings:
   persist: false
 # use UnoCSS (experimental)
 css: unocss
+
+fonts:
+  # 基础字体
+  sans: Robot
+  # 与 windicss 的 `font-serif` css 类一同使用
+  serif: Robot Slab
+  # 用于代码块、内联代码等
+  mono: Fira Code
+
+download: true
 ---
 
 # Welcome to Slidev

@@ -10,20 +10,13 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: "14"
+          node-version: "20.12.1"
+          cache: "npm"
 
       - name: Install dependencies
         run: |
-          sudo apt-get update
-          echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
-          sudo apt-get -y install ttf-mscorefonts-installer fontconfig 
-          fc-list :lang=zh
-          mkfontscale
-          mkfontdir
-          fc-cache
           cd ${{ github.workspace }}
           ls -l
-          npm install -g @slidev/cli@0.35.4
 
       - name: Build for All subfolders
         run: |
@@ -33,12 +26,15 @@ jobs:
             if [ -f "$d/package.json" ]; then
               echo "Building $d"
               cd $d
-              npm install
+              npm install @slidev/cli @slidev/theme-default @slidev/theme-seriph
+              npm i -D @iconify-json/twemoji
               npm i -D playwright-chromium
-              slidev build --base /${{ github.event.repository.name }}/${d}
+              npx slidev build --base ${{ github.workspace }}/${d}
+              npx slidev export --output ${{ github.workspace }}/${d}/dist
               cd ..
             fi
           done
+          tree -d -L 2
 
       - name: Create build folder
         run: |
@@ -47,6 +43,7 @@ jobs:
 
       - name: Copy build files to root # */dist -> build/*
         run: |
+          tree -d -L 2
           for d in $(tree -d -L 1 | grep -v "build" | grep -v "directories"); do
             if [ -d "$d/dist" ]; then
               echo "Copying $d"
@@ -54,6 +51,7 @@ jobs:
               cp -r $d/dist/* build/$d
             fi
           done
+          tree -d -L 2
 
       - name: Generate index.html
         run: |

@@ -9,7 +9,7 @@ exportFilename: optimization-in-deep-learning
 export:
   format: pdf
   timeout: 30000
-  dark: true
+  dark: false
   withClicks: false
   withToc: false
 info: ''
@@ -118,7 +118,7 @@ $$
 
 因此在深度学习中，我们不仅需要考虑优化算法的收敛性，还需要考虑优化算法的泛化性，防止**过拟合**。
 
-然而训练数据集的最小经验风险可能与最小风险（泛化误差）不同 <twemoji-smiling-face-with-tear />
+然而训练数据集的最小经验风险可能与最小风险（泛化误差）不同<twemoji-smiling-face-with-tear />
 
 <!-- center -->
 <div class="flex flex-wrap justify-center gap-4">
@@ -175,6 +175,8 @@ $$
 在引入激活函数前，神经网络的每一层都是线性的，因此多层神经网络的输出也是线性的，这样就无法解决非线性问题。因此我们引入了激活函数，使得神经网络可以解决非线性问题。但是，激活函数的导数可能会很小，这样就会导致梯度消失，使得优化算法无法继续优化。
 
 举个栗子<twemoji-chestnut />：
+
+
 
 使用 $f(x)=\tanh(x)$ 激活函数，恰好从 $x=4$ 处开始，然而 $f'(x)=1-\tanh^2(x)$，因此 $f'(4)=0.0013$，这意味着在 $x=4$ 处的梯度很小，可能优化将会停滞很长一段时间。
 
@@ -546,7 +548,9 @@ $$
 
 3. 较高的学习率可能导致较差的局部最优解，也可能获得较好的局部最优解。
 
-~~（所以你可以在跑实验时调一下随机数种子<twemoji-exploding-head />）~~
+~~（所以你可以在跑实验时调一下随机数种子）<twemoji-exploding-head />~~
+
+
 
 <br/><br/>
 

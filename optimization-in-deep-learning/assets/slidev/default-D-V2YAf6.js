@@ -1,0 +1,1 @@
+import{o,b as t,f as s}from"../modules/vue-Dim-dygt.js";import{b as n}from"../index-GjFdxGIJ.js";const l={},r={class:"slidev-layout default"};function a(e,i){return o(),t("div",r,[s(e.$slots,"default")])}const _=n(l,[["render",a],["__file","/home/runner/work/slide/slide/optimization-in-deep-learning/node_modules/@slidev/client/layouts/default.vue"]]);export{_ as I};
